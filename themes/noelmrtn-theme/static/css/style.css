@@ -1,0 +1,8 @@
+.title-style {
+    background-color: var(--bs-blue);
+}
+
+.title-style a {
+    color: #FFF;
+    text-decoration: none;
+}

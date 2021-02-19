@@ -1,0 +1,12 @@
+<div class="p-3 px-md-4 mb-3 d-flex flex-column flex-md-row align-items-center bg-white border-bottom shadow-sm">
+    <h5 class="px-1 my-0 me-auto font-weight-normal title-style">
+        <a href="{{ .Site.BaseURL }}">
+            <strong>{{ .Site.Title }}</strong>
+        </a>
+    </h5>
+    <nav class="my-2 my-md-0 mr-md-3">
+        {{ range .Site.Menus.main.ByWeight -}}
+            {{ .Pre }}<a class="p-2 text-dark" href="{{ .URL }}" title="{{ .Title }}">{{ .Name }}</a>{{ .Post }}
+        {{- end }}
+    </nav>
+</div>
