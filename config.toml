@@ -1,0 +1,4 @@
+baseURL = "http://noelmrtn.fr/"
+languageCode = "fr-FR"
+title = "noelmrtn" 
+theme = "noelmrtn-theme"
