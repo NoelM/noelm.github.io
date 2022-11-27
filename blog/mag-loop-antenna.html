@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>noelmrtn - blog - build a mag loop antenna</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="">
+    </head>
+    <body style="max-width: 800px;">
+        <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+       
+        <header>
+            <span style="font-size: 2em;">noelmrtn</span><br>
+            <nav><a href="/">home</a> | <a href="/about.html">about</a></nav>
+            <hr>
+        </header>
+
+        <h1>Build a mag loop antenna</h1>
+        <p>
+            The magnetic loop antennas have a lot of advantages: they are compact and are pretty efficient.
+            So, they are quite relevant when the QRA is in a flat, and also for indoor use. Actually, that's
+            my case having the QRA located in a parisian flat. Deploying a full antenna l/4 antenna for HF
+            is complex even with a balcony, because the antenna would be in front of my neighbors window.
+        </p>
+
+        <h2>Mag loop basics</h2>
+        <p>
+            The small antennas consist of two loop, an inner one and a outer one. The inner loop is directly connected to the coax,
+            an end to the shield, the other one to the core. The inner loop acts like a Faraday loop with the second one. The outer
+            loop is not connected to the inner one. Thus the outer loop is inductively fed by the inner one.
+        </p>
+        <p>
+            However, the outer loop must be tuned correctly with the help of a capacitor. Because the bandwidth of the antenna is 
+            small, the capacitor has to be variable even on the same band!
+        </p>
+
+        <h2>Finding the good parameters</h2>
+        <p>
+            I advise you to use the excellent tool <a href="https://miguelvaca.github.io/vk3cpu/magloop.html">VK3CPU Magloop Antenna Calculator</a>.
+            It computes for you all the equation and also gives you the perfect parameters for: efficiency, capacitance, voltage, Q value.
+        </p>
+        
+        <h3>How to proceed?</h3>
+        <p>
+            First of all, you need to find the parameters &#8960;a and &#8960;b, respectively the diameters of the inner and outer loop. My advise would
+            to initially toggle only the efficiency (ratio of energy transmitted to RF with respect to heat) and the Q-value. So, you can find the best
+            enough efficiency for your antenna at the desired band, usually, they are pretty compact up to 20m. If you search for a 40m or even a 80m
+            mag loop antenna, the only solution will be to add more coils, you can vary it with N.
+        </p>
+
+
+        <footer>
+            <hr>
+            <a href="https://github.com/NoelM">Github</a> | 
+            <a rel="me" href="https://mastodon.radio/@F4JJD">Mastodon</a> |
+            <a href="https://twitter.com/noelmrtn">Twitter</a>
+            <br>
+            GPG <code>733B 3B32 06EA B280 4201 E287 5B43 F74D B587 21D1</code>
+        </footer>
+    </body>
+</html>
