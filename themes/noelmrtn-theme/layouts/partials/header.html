@@ -1,0 +1,13 @@
+<header>
+    <span style="font-size: 2em;">{{ .Site.Title }}</span><br>
+    <nav>
+        <ul>
+            {{ range .Site.Menus.main.ByWeight -}}
+            <li>
+                <a href="{{ .URL }}" title="{{ .Title }}">{{- .Name -}}</a>
+            </li>
+            {{- end }}
+        </ul>
+    </nav>
+    <hr>
+</header>

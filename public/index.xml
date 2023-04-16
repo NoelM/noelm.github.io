@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Noël&#39;s Home on noelmrtn</title>
+    <link>https://noelmrtn.fr/</link>
+    <description>Recent content in Noël&#39;s Home on noelmrtn</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 18 Dec 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://noelmrtn.fr/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>My Journey Building a Magnetic Loop Antenna</title>
+      <link>https://noelmrtn.fr/posts/loop_antenna/</link>
+      <pubDate>Sun, 18 Dec 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://noelmrtn.fr/posts/loop_antenna/</guid>
+      <description>Currently I am living within a parisian flat and I love doing HF&amp;hellip; So, I found in magloop antennas a good compromise in order to operate from the inside of my flat. I&amp;rsquo;ve looked for numerous antenna models, but for all of them the price is always high, at least 300€.
+Antenna Design There&amp;rsquo;s a lot of designs available on the internet, the one I found the most interesting was made by OM0ET and him Ultralight MagLoop Antenna MC-20.</description>
+    </item>
+    
+  </channel>
+</rss>

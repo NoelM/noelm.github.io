@@ -1,0 +1,26 @@
+baseURL = 'https://noelmrtn.fr/'
+languageCode = 'en-us'
+title = 'noelmrtn'
+theme = 'noelmrtn-theme'
+
+[menu]
+    [[menu.main]]
+        identifier = "home"
+        name = "home"
+        title = "Home"
+        url = "/"
+        weight = 10
+
+    [[menu.main]]
+        identifier = "hambooklet"
+        name = "hambooklet"
+        title = "HamBooklet"
+        url = "/hambooklet"
+        weight = 20
+
+    [[menu.main]]
+        identifier = "about"
+        name = "about"
+        title = "About"
+        url = "/about"
+        weight = 30

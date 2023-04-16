@@ -1,0 +1,19 @@
+{{ define "main" }}
+<article>
+    <header id="post-header">
+        <h1>{{ .Title }}</h1>
+        <div>
+            {{- if isset .Params "date" -}}
+                <i>Published the:
+                {{ if eq .Lastmod .Date }}
+                    <time>{{ .Date | time.Format "2006-01-02" }}</time>
+                {{ else }}
+                    <time>{{ .Lastmod | time.Format "2006-01-02" }}</time>
+                {{ end }}
+                </i>
+            {{- end -}}
+        </div>
+    </header>
+    {{- .Content -}}
+</article>
+{{ end }}
