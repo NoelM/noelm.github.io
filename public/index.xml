@@ -17,5 +17,26 @@
 Antenna Design There&amp;rsquo;s a lot of designs available on the internet, the one I found the most interesting was made by OM0ET and him Ultralight MagLoop Antenna MC-20.</description>
     </item>
     
+    <item>
+      <title>About</title>
+      <link>https://noelmrtn.fr/about/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://noelmrtn.fr/about/</guid>
+      <description>Hello! I am Noël and I work as a Software Engineer (mostly a manager now) in Paris. My center of interests are: low and retro-technology (arduinos, minitel, esp32, &amp;hellip;), science (former physicist), and also amateur radio (F4JJD).
+I began the college in Lyon, where I studied physics and chemistry. It&amp;rsquo;s how I discovered that the chemistry wasn&amp;rsquo;t made for me. So, I focused only on physics and especially on the theoretical side.</description>
+    </item>
+    
+    <item>
+      <title>Amateur Radio Booklet</title>
+      <link>https://noelmrtn.fr/hambooklet/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://noelmrtn.fr/hambooklet/</guid>
+      <description>The Amateur Radio Booklet consists in a summary of all the needed data when one operates. The booklet is global by design, thus one can find resources for all IARU regions.
+Also, the booklet is fully open sourced! It is released under the CC BY-SA 4.0 license.
+GitHub Repository Current PDF 2023 Edition, in preparation Current Work Final review of the content and chapter reorganization Release the 2023 Edition Preparing the first A5-printed copies Table of Contents Band Plans Digital Modes Morse Code International Beacon Project Radio Abbreviations Q Codes Classification of Emissions Radio Waves Electricity ITU Prefixes Units Mathematics ITU Regions ITU Alphabet </description>
+    </item>
+    
   </channel>
 </rss>

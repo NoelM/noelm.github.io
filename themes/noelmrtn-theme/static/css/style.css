@@ -6,6 +6,10 @@ pre {
     background-color: #DDD;
 }
 
+h1 {
+    font-size: 2em;
+}
+
 nav ul {
     margin: 0;
     padding: 0;
@@ -13,6 +17,10 @@ nav ul {
 
 nav ul li {
     list-style: none;
-    margin-right: 0.2em;
     display: inline;
+}
+
+nav ul li + li::before {
+    content: "|";
+    margin: 0.25em;
 }
