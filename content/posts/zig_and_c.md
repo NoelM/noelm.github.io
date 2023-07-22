@@ -78,11 +78,15 @@ The complete implementations are [here](https://github.com/NoelM/zig-playground/
 
 For the C, at the end of the execution one reads:
 ```
-id: 1000000, total_tries:37566404991, mean_tries:37566.441406, max_tries:999981, total_dur_µs:47239117, mean_dur_µs:37566.441406, max_dur_µs:1297
+id: 1000000,
+total_tries:37566404991, mean_tries:37566.441406, max_tries:999981,
+total_dur_µs:47239117, mean_dur_µs:37566.441406, max_dur_µs:1297
 ```
 while for Zig
 ```
-id:1000000, total_tries:37566404991, mean_tries:3.7566442557442555e+04, max_tries:999981, total_dur_ns:106620356000, mean_dur_ns:1.0662046262046263e+05, max_dur_ns:47848000
+id:1000000,
+total_tries:37566404991, mean_tries:3.7566442557442555e+04, max_tries:999981, 
+total_dur_ns:106620356000, mean_dur_ns:1.0662046262046263e+05, max_dur_ns:47848000
 ```
 both ran on a MacBook Pro M1 2022, 10 cores, 32 GB of RAM.
 
