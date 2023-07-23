@@ -7,10 +7,10 @@ draft = false
 
 A colleague of mine told me to try a new programming language named [Zig](https://ziglang.org/). It is designed
 closely to the C/C++ and also inspired by Rust. I tried to learn Rust those last years as a replacement for C++,
-however the syntax was too hard for me, and I've struggled too much with the compiler...
+however the syntax is too complex for me, and I've struggled too much with the compiler...
 
 I tried Zig a few days ago with [Zig Learn](https://ziglearn.org/) which is an enough detailed tutorial to understand the basics.
-I found the syntax clear and easy to read, but the most important for me: easy to play with, in less than a couple of hour I found
+I found the syntax clear and easy to read, but the most important for me: easy to play with, in less than a couple of hours I found
 myself comfortable with the language! Actually, this is one of the objective of the Zig's philosophy you can access to it by typing
 `zig zen` in your terminal:
 ```
@@ -52,7 +52,7 @@ Zig is supposed to be [faster than C](https://ziglang.org/learn/overview/#:~:tex
 
 ### Implementation
 
-So I wanted to try. I though that a good benchmark is a naive prime number algorithm up to 1 million.
+I though that a good benchmark is a naive (computation intensive) prime number algorithm up to 1 million.
 The algorithm is quite simple, a prime number can be divided only by 1 or itself. So for any prime-number
 candidate `a`, I test from `2` to `a-1` if the modulus equals 0; if yes, the number is not prime.
 
@@ -98,17 +98,21 @@ bool isPrime(uint64_t val, struct Stats* s) {
     return is_prime;
 }
 ```
+
 The complete implementations are [here](https://github.com/NoelM/zig-playground/tree/main/prime_numbers).
 
 ### Compiling Rules
 
 In sake of simplicity, the compiling rules are within a `Makefile`, those read as:
+
 ```makefile
 all:
-	zig build-exe prime.zig -O ReleaseFast
-	clang -O3 prime.c
+    zig build-exe prime.zig -O ReleaseFast
+    clang -O3 prime.c
 ```
+
 with the following versions:
+
 ```
 ➜ clang --version
 Apple clang version 14.0.3 (clang-1403.0.22.14.1)
@@ -129,8 +133,8 @@ I ran my tests on a MacBook Pro, M1 10 cores, 32 GB of RAM. Here are, the "one-s
 | Zig  | 37566404991 | 23 803 142 | 0.633 |
 | C    | 37566404991 | 24 032 267 | 0.640 |
 
-In conclusion the benchmark shows a Zig code about 200 ms faster than C! So one can expect the
-Zig faster by approximately 7 picoseconds per modulus computation.
+In conclusion the benchmark shows a Zig code about 200 ms faster than C, and approximately 7 picoseconds faster
+per modulus computation.
 
 However, the difference is really small and during the test my computer ran other processes. So I've reproduced
 the benchmark 10 times each:
@@ -142,6 +146,6 @@ the benchmark 10 times each:
 
 ## Conclusion
 
-A series of tests show that Zig is about 1.6% faster than C, and also the execution duration fluctuates in Zig than
-in C. So it seems that the author of Zig's documentation were right! This topic was also a thread of discussion
+A series of tests show that Zig is about 1.6% faster than C, and also the execution duration fluctuates less in
+Zig than in C. So it seems that the authors of Zig's documentation are right! This topic was also a thread of discussion
 in [Y Combinator](https://news.ycombinator.com/item?id=21117669), and it contains a few more benchmarks.
