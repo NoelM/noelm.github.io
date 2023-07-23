@@ -1,19 +1,18 @@
 +++
 author = "Noël"
-title = "Prime Numbers Algorithm, in Zig and C -- Part I"
+title = "Prime Numbers Algorithm, in Zig and C"
 date = "2023-07-22"
 draft = false
 +++
-
-_Draft, in progress_
 
 A colleague of mine told me to try a new programming language named [Zig](https://ziglang.org/). It is designed
 closely to the C/C++ and also inspired by Rust. I tried to learn Rust those last years as a replacement for C++,
 however the syntax was too hard for me, and I've struggled too much with the compiler...
 
 I tried Zig a few days ago with [Zig Learn](https://ziglearn.org/) which is an enough detailed tutorial to understand the basics.
-I found the syntax clear and easy to read, but the most important for me, easy to code with!
-The philosophy behind the language is named the Zen of Zig and accessible with `$ zig zen` in your terminal:
+I found the syntax clear and easy to read, but the most important for me: easy to play with, in less than a couple of hour I found
+myself comfortable with the language! Actually, this is one of the objective of the Zig's philosophy you can access to it by typing
+`zig zen` in your terminal:
 ```
 * Communicate intent precisely.
 * Edge cases matter.
@@ -30,12 +29,37 @@ The philosophy behind the language is named the Zen of Zig and accessible with `
 * Together we serve the users.
 ```
 
-## Prime number algorithm
+## Installation
 
-It supposed to be [faster than C](https://news.ycombinator.com/item?id=21117669) because of LLVM, I've found it odd. Thus I wanted to try.
-I though a good benchmark is a naive prime number algorithm up to 1 million.
+The installation procedure [is short](https://ziglang.org/learn/getting-started/#direct-download), on macOS I used `homebrew`.
+While on Linux I did this:
+```bash
+wget https://ziglang.org/download/0.10.1/zig-linux-x86_64-0.10.1.tar.xz
+sudo tar xvf zig-linux-x86_64-0.10.1.tar.xz -C /usr/local/
+sudo mv zig-linux-x86_64-0.10.1 zig 
+```
+then I added to `~/.profile` or your favorite config file (`bashrc, zshrc, ...`):
+```bash
+export PATH=$PATH:/usr/local/zig
+```
 
-I did two implementations, one in Zig, one in C. The algorithm is quite simple in both case:
+## Prime Number Algorithm
+
+Zig is supposed to be [faster than C](https://ziglang.org/learn/overview/#:~:text=Speaking%20of%20performance%2C%20Zig%20is%20faster%20than%20C.) because of LLVM, I've found it odd:
+> Speaking of performance, Zig is faster than C.
+> * The reference implementation uses LLVM as a backend for state of the art optimizations.
+> [...]
+
+### Implementation
+
+So I wanted to try. I though that a good benchmark is a naive prime number algorithm up to 1 million.
+The algorithm is quite simple, a prime number can be divided only by 1 or itself. So for any prime-number
+candidate `a`, I test from `2` to `a-1` if the modulus equals 0; if yes, the number is not prime.
+
+Here are the two implementations in Zig and C:
+
+#### Zig
+
 ```zig
 pub fn isPrime(int: u64, stats: *Stats) bool {
     const start = std.time.nanoTimestamp();
@@ -53,7 +77,9 @@ pub fn isPrime(int: u64, stats: *Stats) bool {
     return is_prime;
 }
 ```
-and on the other hand:
+
+#### C
+
 ```c
 bool isPrime(uint64_t val, struct Stats* s) {
     clock_t start = clock();
@@ -74,21 +100,37 @@ bool isPrime(uint64_t val, struct Stats* s) {
 ```
 The complete implementations are [here](https://github.com/NoelM/zig-playground/tree/main/prime_numbers).
 
+### Compiling Rules
+
+In sake of simplicity, the compiling rules are within a `Makefile`, those read as:
+```makefile
+all:
+	zig build-exe prime.zig -O ReleaseFast
+	clang -O3 prime.c
+```
+with the following versions:
+```
+➜ clang --version
+Apple clang version 14.0.3 (clang-1403.0.22.14.1)
+Target: arm64-apple-darwin22.5.0
+Thread model: posix
+InstalledDir: /Library/Developer/CommandLineTools/usr/bin
+
+➜ zig version
+0.10.1
+```
+
 ## Performances
 
-For the C, at the end of the execution one reads:
-```
-id: 1000000,
-total_tries:37566404991, mean_tries:37566.441406, max_tries:999981,
-total_dur_µs:47239117, mean_dur_µs:37566.441406, max_dur_µs:1297
-```
-while for Zig
-```
-id:1000000,
-total_tries:37566404991, mean_tries:3.7566442557442555e+04, max_tries:999981, 
-total_dur_ns:106620356000, mean_dur_ns:1.0662046262046263e+05, max_dur_ns:47848000
-```
-both ran on a MacBook Pro M1 2022, 10 cores, 32 GB of RAM.
+I ran my tests on a MacBook Pro, M1 10 cores, 32 GB of RAM. Here are, the "one-shot" results:
 
-Thus finally, for the exact same number of modulus computations (37566404991), it costed 47 seconds to the C program, while it costed 107 seconds.
-**But why? That's the next part of the article**
+| Lang |Modulus tries | Total duration (µs) | Mean duration / modulus (ns) |
+| ---- | ----        | ----     | ----  |
+| Zig  | 37566404991 | 23803142 | 0.633 |
+| C    | 37566404991 | 24032267 | 0.640 |
+
+In conclusion the benchmark shows a Zig code about 200 ms faster than C! So one can expect the
+Zig faster by approximately 7 picoseconds per modulus computation.
+
+However, the difference is really small and during the test my computer ran other processes. So I've reproduced
+the benchmark 10 times each
