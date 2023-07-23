@@ -124,13 +124,24 @@ InstalledDir: /Library/Developer/CommandLineTools/usr/bin
 
 I ran my tests on a MacBook Pro, M1 10 cores, 32 GB of RAM. Here are, the "one-shot" results:
 
-| Lang |Modulus tries | Total duration (µs) | Mean duration / modulus (ns) |
+| Lang | Modulus Tries | Total Duration (µs) | Modulus duration (ns) |
 | ---- | ----        | ----     | ----  |
-| Zig  | 37566404991 | 23803142 | 0.633 |
-| C    | 37566404991 | 24032267 | 0.640 |
+| Zig  | 37566404991 | 23 803 142 | 0.633 |
+| C    | 37566404991 | 24 032 267 | 0.640 |
 
 In conclusion the benchmark shows a Zig code about 200 ms faster than C! So one can expect the
 Zig faster by approximately 7 picoseconds per modulus computation.
 
 However, the difference is really small and during the test my computer ran other processes. So I've reproduced
-the benchmark 10 times each
+the benchmark 10 times each:
+
+| Lang | Avg. Tot. Duration (µs) | StDev. Tot. Duration (µs) | Avg. Modulus Duration (ns) |
+| ---- | ----       | ----    | ----  |
+| Zig  | 23 410 056 | 15 747  | 0.623 |
+| C    | 23 799 143 | 117 680 | 0.633 |
+
+## Conclusion
+
+A series of tests show that Zig is about 1.6% faster than C, and also the execution duration fluctuates in Zig than
+in C. So it seems that the author of Zig's documentation were right! This topic was also a thread of discussion
+in [Y Combinator](https://news.ycombinator.com/item?id=21117669), and it contains a few more benchmarks.
