@@ -41,12 +41,16 @@ table th {
 }
 
 p code {
-    font-size: large;
+    background-color: #DDD;
+    padding: 1px 5px;
+    border-radius: 5px;
 }
 
 pre {
     background-color: #DDD;
-    padding: 5px;
+    padding: 7px;
+    border-radius: 7px;
+    white-space: pre-wrap;
 }
 
 blockquote {
