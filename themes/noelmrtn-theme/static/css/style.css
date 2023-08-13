@@ -40,7 +40,7 @@ table th {
     border: 1px solid #DDD;
 }
 
-p code {
+p code, li code{
     background-color: #DDD;
     padding: 1px 5px;
     border-radius: 5px;
