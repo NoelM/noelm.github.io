@@ -128,6 +128,7 @@ a pool of thread waiting for a task without being stopped.
 ## Manual
 
 I create a manual list of thread for only one task, they communicate with Queues.
+_Think about Thread.join, it would be better_
 
 ## Standard Library
 
@@ -147,3 +148,15 @@ defer thread_pool.deinit();
 Do not forget that the `try` in front of `thread_pool.init()` catches and return an error
 if the function returns one. Whenever a function returns an error, you must [catch it](https://ziglearn.org/chapter-1/#errors).
 The function that returns error returns a type `!T` where the `!` notifies a possible error returned instead of the type `T`.
+
+## Wait Group
+
+Because we are running loops we have to wait for them finishing. A wait group is an atomic counter, which count the number of
+running loops. In the std lib you must take of reseting it first! Actually, the Thread.Event need to be active
+
+```zig
+const WaitGroup = std.Thread.WaitGroup;
+
+var wait_group: WaitGroup = undefined;
+wait_group.reset();
+```
