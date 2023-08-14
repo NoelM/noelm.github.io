@@ -114,7 +114,6 @@ an optional node pointer, because the queue can be empty. Thus when consuming te
 ```zig
 if (int_to_test.get()) |node| {
     const value = node.data;
-
     // do sth. with the data
 } else {
     // empty queue
@@ -123,7 +122,16 @@ if (int_to_test.get()) |node| {
 
 ## Thread Pool
 
-If you want to instantiate you need to declare it as:
+A thread pool is designed to optimize the number of running threads. Instead of popping a thread for any task, it maintains
+a pool of thread waiting for a task without being stopped.
+
+## Manual
+
+I create a manual list of thread for only one task, they communicate with Queues.
+
+## Standard Library
+
+Thus, here it is how one does the instantiation of the thread pool in zig
 
 ```zig
 const Pool = std.Thread.Pool;
@@ -135,7 +143,6 @@ try thread_pool.init(Pool.Options{
 });
 defer thread_pool.deinit();
 ```
-
 
 Do not forget that the `try` in front of `thread_pool.init()` catches and return an error
 if the function returns one. Whenever a function returns an error, you must [catch it](https://ziglearn.org/chapter-1/#errors).
