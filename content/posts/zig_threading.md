@@ -104,7 +104,8 @@ node.* = .{
 };
 int_to_test.put(node);
 ```
-As one can see, we let the value 
+
+As one can see, we let the values `.prev` and `.next` to `undefined`, then the function `put` will set the correct values.
 
 #### Get Nodes from Queue
 
@@ -127,12 +128,71 @@ a pool of thread waiting for a task without being stopped.
 
 ## Manual
 
-I create a manual list of thread for only one task, they communicate with Queues.
-_Think about Thread.join, it would be better_
+First, I create a slice (because it size cannot be evaluated at compilation) of `std.Thread`.
+
+```zig
+var pool = try arena.alloc(std.Thread, cpu_count);
+defer arena.free(pool);
+
+for (pool) |*thread| {
+    thread.* = try std.Thread.spawn(.{}, isPrimeRoutine, .{ &int_to_test, &int_prime });
+}
+```
+
+Each thread runs a function `isPrimeRoutine` which reads a queue containing values to be tested. The loop quits when
+the queue is empty, because it means no more work.
+
+```zig
+pub fn isPrimeRoutine(int_to_test: *U64Queue, int_prime: *U64Queue) void {
+    while (true) {
+        if (int_to_test.get()) |node| {
+            const value = node.data;
+
+            var is_value_prime = true;
+            var i: u64 = 2;
+            while (i < value) : (i += 1) {
+                if (value % i == 0) {
+                    is_value_prime = false;
+                    break;
+                }
+            }
+
+            if (is_value_prime) {
+                node.prev = undefined;
+                node.next = undefined;
+                int_prime.put(node);
+            }
+        } else {
+            // empty queue
+            return;
+        }
+    }
+}
+```
+
+This example shows an interesting behavior of queues, as `int_to_test.get()` returns a pointer. It is not deleted
+by the function, still allocated. So, you can reuse it as a new node of `is_prime` thanks to reset `.prev` and
+`.next`.
+
+Finally, we use the classical `.join()` function which waits for threads to end.
+
+```zig
+for (pool) |thread| {
+    thread.join();
+}
+```
+
+{{<hint>}}
+Previously, I presented the thread-safe allocator with the name `arena`. In this implementation, a thread-safe
+allocator is not required.
+{{</hint>}}
+
+`prime_manual.zig`: [Github](https://github.com/NoelM/zig-playground/blob/main/prime_numbers_parallel/prime_manual.zig)
 
 ## Standard Library
 
-Thus, here it is how one does the instantiation of the thread pool in zig
+We propose to compare and use the standard-library implementation. It is not documented, but its purpose is to maintain
+a pool of threads, and spawning tasks; they are queued within a `RunQueue`. The instantiation is quite simple:
 
 ```zig
 const Pool = std.Thread.Pool;
@@ -140,23 +200,49 @@ const Pool = std.Thread.Pool;
 var thread_pool: Pool = undefined;
 try thread_pool.init(Pool.Options{
     .allocator = arena,   // this is an arena allocator from `std.heap.ArenaAllocator`
-    .n_jobs = cpu_count,  // here I prefer to use as many thread as many CPUs
+    .n_jobs = cpu_count,  // optional, by default the number of CPUs available
 });
 defer thread_pool.deinit();
 ```
 
+{{<hint>}}
 Do not forget that the `try` in front of `thread_pool.init()` catches and return an error
 if the function returns one. Whenever a function returns an error, you must [catch it](https://ziglearn.org/chapter-1/#errors).
 The function that returns error returns a type `!T` where the `!` notifies a possible error returned instead of the type `T`.
+{{</hint>}}
 
-## Wait Group
+Instead of spawning a task per integer, I shard them. Actually, testing a single integer is a too small task compared to
+spawning the task itself.
 
-Because we are running loops we have to wait for them finishing. A wait group is an atomic counter, which count the number of
-running loops. In the std lib you must take of reseting it first! Actually, the Thread.Event need to be active
+```zig
+const value_max: u64 = 1000000;
+const shard_size: u64 = 1000;
+
+var value: u64 = 0;
+while (value < value_max) : (value += shard_size) {
+    try thread_pool.spawn(isPrimeRoutine, .{ &wait_group, &arena, value, shard_size, &int_prime });
+}
+```
+
+Each task will verify from `value` to `value + shard_size` all the possible prime numbers. In contrast with
+the previous example, here one requires an allocator to create new nodes. This allocator is called simultaneously
+from each thread, so, ensure it is a thread-safe one.
+
+### Wait Group
+
+The thread pool does not have a public `join` member, but it gets `waitAndWork` instead, and it requires a
+wait group (the _stdlib_ contains an implementation of wait groups). First of all, you should `reset` your
+wait group before using it. Actually, it contains an `std.Thread.ResetEvent` which is not initialized by default.
 
 ```zig
 const WaitGroup = std.Thread.WaitGroup;
 
 var wait_group: WaitGroup = undefined;
 wait_group.reset();
+
+// create thread pool, spawn tasks
+
+thread_pool.waitAndWork(&wait_group);
 ```
+
+`prime_std.zig`: [Github](https://github.com/NoelM/zig-playground/blob/main/prime_numbers_parallel/prime_std.zig)

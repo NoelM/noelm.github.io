@@ -40,8 +40,8 @@ table th {
     border: 1px solid #DDD;
 }
 
-p code, li code{
-    background-color: #DDD;
+code {
+    background-color: #00000015;
     padding: 1px 5px;
     border-radius: 5px;
 }
@@ -53,6 +53,22 @@ pre {
     white-space: pre-wrap;
 }
 
+pre code {
+    padding: 0;
+    border-radius: 0;
+}
+
 blockquote {
     font-style: italic;
+}
+
+blockquote.hint {
+    margin: 0;
+    padding: 1em;
+    border: 1px;
+    border-radius: 7px;
+    font-style: normal;
+    color: #004085;
+    border-color: #b8daff;
+    background-color: #cce5ff;
 }
