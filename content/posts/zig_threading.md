@@ -126,7 +126,7 @@ if (int_to_test.get()) |node| {
 A thread pool is designed to optimize the number of running threads. Instead of popping a thread for any task, it maintains
 a pool of thread waiting for a task without being stopped.
 
-## Manual
+### Manual
 
 First, I create a slice (because it size cannot be evaluated at compilation) of `std.Thread`.
 
@@ -189,7 +189,7 @@ allocator is not required.
 
 `prime_manual.zig`: [Github](https://github.com/NoelM/zig-playground/blob/main/prime_numbers_parallel/prime_manual.zig)
 
-## Standard Library
+### Standard Library
 
 We propose to compare and use the standard-library implementation. It is not documented, but its purpose is to maintain
 a pool of threads, and spawning tasks; they are queued within a `RunQueue`. The instantiation is quite simple:
@@ -228,7 +228,7 @@ Each task will verify from `value` to `value + shard_size` all the possible prim
 the previous example, here one requires an allocator to create new nodes. This allocator is called simultaneously
 from each thread, so, ensure it is a thread-safe one.
 
-### Wait Group
+#### Wait Group
 
 The thread pool does not have a public `join` member, but it gets `waitAndWork` instead, and it requires a
 wait group (the _stdlib_ contains an implementation of wait groups). First of all, you should `reset` your
