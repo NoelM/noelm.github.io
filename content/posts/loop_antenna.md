@@ -21,3 +21,7 @@ With respect to the antenna dimensions (outer loop ⌀1m, conductor ⌀16mm), th
 * V Cap: 6kV (@ 10MHz)
 
 I bought my first capacitor on ebay, but recently I found a better place [elektrodump.nl](https://elektrodump.nl/en/48-variable-capacitor). Never bought from them but the quality looks better and the description are accurate. Actually, my first capacitor (the one from ebay) is not designed for high voltages. The maximum voltage allowed by a capacitor can be inferred with respect to the [spacing between the plates](https://ham.stackexchange.com/a/6294). The last solution is doing it yourself, one can find here [a relevant tutorial](https://www.instructables.com/Lets-Build-High-Voltage-Butterfly-Variable-Air-Cap/).
+
+## Epilogue
+
+This antenna was terrible in term of SWR, even with a nanoVNA I couldn't find its best configuration...

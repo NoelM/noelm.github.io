@@ -1,0 +1,5 @@
+<blockquote class="hint">
+{{ if strings.ContainsNonSpace .Inner }}
+    {{ .Inner | markdownify }}
+{{ end }}
+</blockquote>
