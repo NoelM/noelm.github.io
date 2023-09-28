@@ -2,34 +2,30 @@
 title: "Amateur Radio Booklet"
 ---
 
-The Amateur Radio Booklet consists in a summary of all the needed data when one operates.
-The booklet is global by design, thus one can find resources for all IARU regions.
+The Amateur Radio Booklet consists of a summary of all the needed data when one operates.
+The booklet is global by design. Thus, one can find resources for all IARU regions.
 
-Also, the booklet is fully open sourced! It is released under the [**CC BY-SA 4.0** license](https://creativecommons.org/licenses/by-sa/4.0).
+Also, the booklet is fully open-sourced under the [**CC BY-SA 4.0** license](https://creativecommons.org/licenses/by-sa/4.0) license.
 
 * [GitHub Repository](https://github.com/NoelM/hambooklet)
 * [Current PDF](https://github.com/NoelM/hambooklet/raw/main/booklet.pdf)
-* 2023 Edition, _in preparation_
 
 ## Current Work
 
-1. Final review of the content and chapter reorganization
-2. Release the 2023 Edition
-3. Preparing the first A5-printed copies
+- [ ] Preparing the first A5-printed copies
 
 ## Table of Contents
 
 * Band Plans
-* Digital Modes
-* Morse Code
-* International Beacon Project
-* Radio Abbreviations
-* Q Codes
 * Classification of Emissions
+* Q Codes
+* Morse Code
+* Radio Abbreviations
+* Digital Modes
+* International Beacon Project
 * Radio Waves
 * Electricity
-* ITU Prefixes
+* ITU Prexfixes, Regions, and Alphabet
+* QTH Locator
 * Units
 * Mathematics
-* ITU Regions
-* ITU Alphabet
