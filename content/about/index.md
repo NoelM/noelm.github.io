@@ -1,14 +1,13 @@
 ---
 title: "About"
 ---
-Hello! I am Noël and I work as a Software Engineer (mostly a manager now) in Paris. My center of interests are: low and retro-technology (arduinos, minitel, esp32, ...), science (former physicist), and also amateur radio (F4JJD).
+Hello! I am Noël, a Software Engineer (mainly a manager now) in Paris. My centers of interest are low and retro-technology (Arduino, Minitel, esp32), science (former physicist), and amateur radio (F4JJD).
 
-I began the college in Lyon, where I studied physics and chemistry. It's how I discovered that the chemistry wasn't made for me. So, I focused only on physics and especially on the theoretical side. I joined in 2013 the CNRS (French organization for research) as a PhD student, and I did research in the neutron-star physics field. Those stars are compact (~10 km) and massive (~ a solar mass), it gives them complex structures (inner crust, ...) and properties (pulsars, glitches, ...) — all my papers are available [here](https://noelmrtn.fr/about.html#research).
+I began college in Lyon, where I studied physics and chemistry. Then, I focused only on fundamental physics, especially theoretical research. In 2013, I joined the CNRS (French Organization for Research) as a PhD student and pursued into the neutron-star physics field. Those stars are compact (~10 km) and massive (about a solar mass), which gives them complex structures and properties — all my papers are available here.
 
-Then, I moved to software engineering after a year of postdoc at the edge between physics and computer science. I joined in 2017 [@QwantResearch](https://www.qwant.com/), as a computer-science researcher. Most of my work consisted to solve problems like: graph computation up to a billion nodes and more (with limited RAM and CPU, but performed in less than a day), and web crawling at scale (a billion pages daily).
-Since 2019, I've joined [@Botify](https://www.botify.com/), a technical SEO company providing an analytic tool and optimized content to search-engine bots. Within this company I am leading two teams of developers working on: optimized caching and server-side rendering, and on the rendering and the crawling engines.
+After a year of postdoc at the edge between physics and computer science, I moved to software engineering. I joined in 2017 [@QwantResearch](https://www.qwant.com/) as a research engineer. My work involved solving problems like graph computation up to a billion nodes and more (with limited RAM and CPU, and performed in less than a day) and web crawling at scale (a billion pages daily). Since 2019, I’ve joined [@Botify](https://www.botify.com/), a technical SEO company providing an analytic tool and optimized content to search-engine bots. I lead two R&D teams in this company, working on data engineering and crawler techniques.
 
-Also, I got my amateur radio license in 2021 with the call-sign **F4JJD**. I am mostly active in HF in the 40m and 20m bands, with two rigs FT-817ND and the FT-891. Since I got a QRP rig, I am doing some Summit On The Air (SOTA) activations and I use a End Fed Half Wire (EFHW) antenna, with a 6m-tall and telescopic glass-fiber pole. I am operating a bit in VHF/UHF with an FT-4X and soon an FT-3D for APRS.
+Finally, I got my amateur radio license in 2021 with the call sign F4JJD. I am primarily active in HF in the 40m and 20m bands (with the Yaesu FT-817ND and FT-891). Since I got a QRP rig, I am doing some SOTA activations with an End Fed Half Wire (EFHW) antenna and a 6m-tall and telescopic glass-fiber pole. More sparsely, I operate in VHF/UHF with handled radios (FT-4X and FT-3D).
 
 ## Research
 
