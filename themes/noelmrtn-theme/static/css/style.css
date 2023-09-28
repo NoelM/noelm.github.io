@@ -77,3 +77,7 @@ blockquote.hint {
     border-color: #b8daff;
     background-color: #cce5ff;
 }
+
+img {
+    max-width: 600px;
+}
