@@ -8,26 +8,27 @@ draft = false
 ## Prequel
 
 With the release of Zig `0.11.0`, the language introduced [channels](https://ziglang.org/documentation/0.11.0/std/#A;std:event.Channel)
-like in Go. However, in the same release they announced that the support of
-[async function is postponed](https://ziglang.org/documentation/0.11.0/#Async-Functions), and the related
-[Github issue](https://github.com/ziglang/zig/issues/6025). Finally, the async support is expected for the release `0.13.0`.
+like in Go. However, in the same release, they announced that the support of
+[async function is postponed](https://ziglang.org/documentation/0.11.0/#Async-Functions) (related
+[Github issue](https://github.com/ziglang/zig/issues/6025)). They expect the support of async functions by the `0.13.0`.
 
-I wanted to test channels, but I'm in this situation:
+I initially wanted to test channels, but I'm in this situation:
 
 * `0.11.0` gets `Channel`, but unusable because it requires [await](https://ziglang.org/documentation/0.11.0/std/#A;std:event.Channel.get) functions
 * `0.10.0` gets `async/await` support with the option `-fstage1`, but the `Channel` is not part of the language
 
-Thus, I switched to the good old solution of _thread pools_.
+So, I switched to the solution of _thread pools_.
 
 ## Introduction
 
-Using a prime-number algorithm, I previously benchmarked the [Zig versus C](https://noelmrtn.fr/posts/zig_and_c/).
-It was single-threaded, so porting the algorithm to a multi-threaded implementation sounds fun.
+In a previous post, I benchmarked [Zig versus C](https://noelmrtn.fr/posts/zig_and_c/) with a naive prime-number algorithm.
+It used to be a single-thread implementation. Now, the goal is porting it into multi-threading.
 
 The standard library of Zig has a type `std.Thread` that includes the basics of threading: `spawn`, `join`, `Mutex`... But also some
-more advanced like [thread pool](https://ziglang.org/documentation/0.11.0/std/#A;std:Thread.Pool) (not documented yet).
+more advanced ones like [thread pool](https://ziglang.org/documentation/0.11.0/std/#A;std:Thread.Pool). Tread pools are not documented yet,
+and this tutorial intends to be one proposition.
 
-The implementation consists of a pool of threads waiting for a task to be executed. In our case, a task tests whether an integer is
+The following implementation consists of a pool of threads waiting for a task to be executed. In our case, a task tests whether an integer is
 prime or not. I will present two possible implementations: one with manually spawned threads and the other one with the help
 of `std.Thread.Pool`.
 
@@ -37,10 +38,10 @@ The complete code is published on [Github](https://github.com/NoelM/zig-playgrou
 
 ### Allocator
 
-In Zig, there is no hidden allocation. So, every memory allocation is performed by an allocator of type `std.mem.Allocator`. It is
+In Zig, there is no hidden allocation. Every memory allocation is performed by an allocator of type `std.mem.Allocator`. It is
 similar to the `malloc` function in `C` with more options: heap, fixed buffer, arena...
 
-By default, the allocators are single-threaded and not suitable for concurrency. Here is an example of thread-safe allocator:
+By default, the allocators are single-threaded and not suitable for concurrency. A thread-safe allocator reads as:
 
 ```zig
 var single_threaded_arena = std.heap.ArenaAllocator.init(std.heap.page_allocator);
@@ -68,7 +69,8 @@ pub const Node = struct {
 A `?`-prefixed pointer is a so-called [_optional pointer_](https://ziglang.org/documentation/0.11.0/#Optional-Pointers),
 and it allows its memory address to be null (by default, a pointer in Zig is not nullable).
 
-To deal with an optional pointer `?*T` you must check if it points to a memory location. An option is directly within an `if`:
+To deal with an optional pointer `?*T` you must check whether it points to a memory location or not.
+One of the options is within an `if` statement:
 
 ```zig
 if (optional_ptr) |ptr| {
@@ -104,12 +106,12 @@ node.* = .{
 int_to_test.put(node);
 ```
 
-As one can see, we let the values `.prev` and `.next` to `undefined`, then the function `put` sets the correct values.
+As one can see, we set the values `.prev` and `.next` to `undefined` because the function `put` sets them correctly.
 
 #### Get Nodes from Queue
 
-The elements in a `Queue` can be safely accessed from any program thread with the function `get`. It returns
-an optional node pointer because the queue might be empty. So, test the value of the returned `Node`:
+The elements in a `Queue` can be safely accessed from any thread with the function `get`. It returns
+an optional node pointer because the queue might be empty. So, testing the value of the returned `Node` is mandatory:
 
 ```zig
 if (int_to_test.get()) |node| {
@@ -138,7 +140,7 @@ for (pool) |*thread| {
 }
 ```
 
-Each thread runs a function `isPrimeRoutine`. The function reads a queue, tests the returned values, and returns when the queue is empty.
+Each thread runs a function `isPrimeRoutine`. This function reads a queue, tests the queued values, and returns when the queue is empty.
 
 ```zig
 pub fn isPrimeRoutine(int_to_test: *U64Queue, int_prime: *U64Queue) void {
@@ -168,10 +170,10 @@ pub fn isPrimeRoutine(int_to_test: *U64Queue, int_prime: *U64Queue) void {
 }
 ```
 
-This example shows an interesting behavior of queues, as `int_to_test.get()` returns a pointer that is not deallocated.
-So, you can reuse it as a new node of `is_prime` thanks to reset `.prev` and `.next`.
+The example shows an interesting behavior of queues, as `int_to_test.get()` returns a pointer that is not deallocated.
+So, you can reuse it as a new node of `is_prime`, reminding you to reset `.prev` and `.next`.
 
-Finally, we use the classical `.join()` waiting for threads to end.
+Finally, the classical `.join()` waits for all threads to end.
 
 ```zig
 for (pool) |thread| {
