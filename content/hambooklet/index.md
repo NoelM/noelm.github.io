@@ -10,10 +10,6 @@ Also, the booklet is fully open-sourced under the [**CC BY-SA 4.0** license](htt
 * [GitHub Repository](https://github.com/NoelM/hambooklet)
 * [Current PDF](https://github.com/NoelM/hambooklet/raw/main/booklet.pdf)
 
-## Current Work
-
-- [ ] Preparing the first A5-printed copies
-
 ## Table of Contents
 
 * Band Plans
@@ -25,7 +21,12 @@ Also, the booklet is fully open-sourced under the [**CC BY-SA 4.0** license](htt
 * International Beacon Project
 * Radio Waves
 * Electricity
-* ITU Prexfixes, Regions, and Alphabet
+* ITU Prefixes, Regions, and Alphabet
 * QTH Locator
 * Units
 * Mathematics
+
+## To do
+
+[x] Release of the 2023 Edition
+[ ] Preparing the first A5-printed copies
