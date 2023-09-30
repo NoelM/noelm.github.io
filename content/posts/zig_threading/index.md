@@ -9,28 +9,32 @@ draft = false
 
 With the release of Zig `0.11.0`, the language introduced [channels](https://ziglang.org/documentation/0.11.0/std/#A;std:event.Channel)
 like in Go. However, in the same release, they announced that the support of
-[async function is postponed](https://ziglang.org/documentation/0.11.0/#Async-Functions) (related
-[Github issue](https://github.com/ziglang/zig/issues/6025)). They expect the support of async functions by the `0.13.0`.
+[async functions is postponed](https://ziglang.org/documentation/0.11.0/#Async-Functions) (related
+[Github issue](https://github.com/ziglang/zig/issues/6025)); they expect their support for the release `0.13.0`.
 
-I initially wanted to test channels, but I'm in this situation:
+Initially, I wanted to test channels, but:
 
 * `0.11.0` gets `Channel`, but unusable because it requires [await](https://ziglang.org/documentation/0.11.0/std/#A;std:event.Channel.get) functions
 * `0.10.0` gets `async/await` support with the option `-fstage1`, but the `Channel` is not part of the language
 
-So, I switched to the solution of _thread pools_.
+Finally, I switched to the solution of _thread pools_.
 
 ## Introduction
 
 In a previous post, I benchmarked [Zig versus C](https://noelmrtn.fr/posts/zig_and_c/) with a naive prime-number algorithm.
-It used to be a single-thread implementation. Now, the goal is porting it into multi-threading.
+It used to be a single-threaded implementation; now, the goal is porting it into multi-threading.
 
-The standard library of Zig has a type `std.Thread` that includes the basics of threading: `spawn`, `join`, `Mutex`... But also some
-more advanced ones like [thread pool](https://ziglang.org/documentation/0.11.0/std/#A;std:Thread.Pool). Tread pools are not documented yet,
-and this tutorial intends to be one proposition.
+The standard library of Zig has a type `std.Thread` that includes the basics of threading: `spawn`, `join`, `Mutex`... Also, it comes with
+more advanced features, such as [thread pools](https://ziglang.org/documentation/0.11.0/std/#A;std:Thread.Pool) (they are not documented yet,
+and this tutorial intends to be one proposition).
 
-The following implementation consists of a pool of threads waiting for a task to be executed. In our case, a task tests whether an integer is
-prime or not. I will present two possible implementations: one with manually spawned threads and the other one with the help
-of `std.Thread.Pool`.
+A _thread pool_ consists of a group of (OS or green) threads waiting to execute tasks. Typically, a _thread pool_ is designed to
+accept a variety of tasks that are not assigned to a specific thread, maximizing the parallelism. Here, one accounts for a single task
+defined as: testing whether an integer is prime or not.
+
+I will detail two possible implementations:
+* a manually spawned thread pool, where each thread is designed for a specific task;
+* a managed-thread pool with `std.Thread.Pool`, where threads accept any task.
 
 The complete code is published on [Github](https://github.com/NoelM/zig-playground/tree/main/prime_numbers_parallel).
 
@@ -38,10 +42,11 @@ The complete code is published on [Github](https://github.com/NoelM/zig-playgrou
 
 ### Allocator
 
-In Zig, there is no hidden allocation. Every memory allocation is performed by an allocator of type `std.mem.Allocator`. It is
-similar to the `malloc` function in `C` with more options: heap, fixed buffer, arena...
+Zig does not perform any hidden allocation, they should be all explicit. So, memory allocation is performed with the help of
+an allocator `std.mem.Allocator`, it is similar to the C `malloc`, but it accepts more options: heap, fixed buffer, arena...
 
-By default, the allocators are single-threaded and not suitable for concurrency. A thread-safe allocator reads as:
+Beware, a basic `std.mem.Allocator` is not suitable for concurrency. So in the context of multi-threading and concurrent 
+memory allocations, the allocator must wrapped into a _thread-safe allocator type_ as follows.
 
 ```zig
 var single_threaded_arena = std.heap.ArenaAllocator.init(std.heap.page_allocator);
@@ -55,8 +60,8 @@ const arena = thread_safe_arena.allocator();
 
 ### Queues
 
-The standard library (_stdlib_) provides a type `std.atomic.Queue(T: type)`. It allows multiple producers and readers to access
-it concurrently, with functions: `put`, `get`, `remove`... Every item of the queue is of type `Node`:
+The standard library (_stdlib_) provides a type `std.atomic.Queue(T: type)`. It allows multiple producers and readers performing
+simultaneous operations with functions: `put`, `get`, `remove`... The queue items are structs of type `Node` with the required members:
 
 ```zig
 pub const Node = struct {
@@ -67,7 +72,7 @@ pub const Node = struct {
 ```
 
 A `?`-prefixed pointer is a so-called [_optional pointer_](https://ziglang.org/documentation/0.11.0/#Optional-Pointers),
-and it allows its memory address to be null (by default, a pointer in Zig is not nullable).
+which allows a null memory address (by default, a pointer in Zig is not nullable).
 
 To deal with an optional pointer `?*T` you must check whether it points to a memory location or not.
 One of the options is within an `if` statement:
@@ -89,7 +94,7 @@ const val = optional_ptr.?.*;
 
 #### Initialize and Fill Queues
 
-It is pretty easy to set up a thread-safe queue. First of all, initialize it. Then, allocate nodes with the previously defined
+Setting up a thread-safe queue is pretty easy. First, initialize it. Then, allocate nodes with the previously defined
 thread-safe allocator.
 
 ```zig
@@ -106,12 +111,12 @@ node.* = .{
 int_to_test.put(node);
 ```
 
-As one can see, we set the values `.prev` and `.next` to `undefined` because the function `put` sets them correctly.
+As one can see, we set the values `.prev` and `.next` to `undefined`, they will be set the function `put`.
 
 #### Get Nodes from Queue
 
-The elements in a `Queue` can be safely accessed from any thread with the function `get`. It returns
-an optional node pointer because the queue might be empty. So, testing the value of the returned `Node` is mandatory:
+One can safely access, from any thread, the `Queue` elements by calling `get`. It returns an optional node pointer `?*Node`, set to null if the
+queue is empty. Consequently, before playing the `?*Node` value, test it:
 
 ```zig
 if (int_to_test.get()) |node| {
@@ -124,12 +129,12 @@ if (int_to_test.get()) |node| {
 
 ## Thread Pool
 
-A thread pool aims to optimize the number of running threads. Instead of popping a new thread for each task, it maintains
-a pool of threads waiting for tasks without being stopped.
+A thread pool aims to maintain a group of always-running threads, in contrast with, a naïve implementation where one spawns and joins thread for every task.
+Such approach may, if the tasks are short, overload the OS-thread scheduler and waste CPU power for non-computational tasks.
 
 ### Manual
 
-First, I create a slice (a slice and not an array because its size cannot be evaluated at compilation) of `std.Thread`.
+First, we create a slice (and not an array because its size cannot be evaluated at compilation) of `std.Thread`.
 
 ```zig
 var pool = try arena.alloc(std.Thread, cpu_count);
@@ -140,7 +145,8 @@ for (pool) |*thread| {
 }
 ```
 
-Each thread runs a function `isPrimeRoutine`. This function reads a queue, tests the queued values, and returns when the queue is empty.
+Each thread runs a function `isPrimeRoutine`. The function reads a queue of integers, tests the queued integers, sends the test result,
+and finally returns when the queue is empty.
 
 ```zig
 pub fn isPrimeRoutine(int_to_test: *U64Queue, int_prime: *U64Queue) void {
@@ -170,8 +176,8 @@ pub fn isPrimeRoutine(int_to_test: *U64Queue, int_prime: *U64Queue) void {
 }
 ```
 
-The example shows an interesting behavior of queues, as `int_to_test.get()` returns a pointer that is not deallocated.
-So, you can reuse it as a new node of `is_prime`, reminding you to reset `.prev` and `.next`.
+This example shows an interesting behavior of queues. The function `int_to_test.get()` returns a pointer `?*Node`, which is not deallocated by the `get`.
+So, you can reuse the it for sending back the result of the test within another queue (`is_prime`), by taking care to set `.prev` and `.next` to `undefined`.
 
 Finally, the classical `.join()` waits for all threads to end.
 
@@ -182,8 +188,8 @@ for (pool) |thread| {
 ```
 
 {{<hint>}}
-Previously, I presented an `arena` thread-safe allocator. The current implementation does not require a thread-safe
-allocator anymore.
+Previously, I presented an `arena` thread-safe allocator. But this implementation does not concurrent allocations, they are all
+performed in the main thread.
 {{</hint>}}
 
 `prime_manual.zig`: [Github](https://github.com/NoelM/zig-playground/blob/main/prime_numbers_parallel/prime_manual.zig)
@@ -191,7 +197,7 @@ allocator anymore.
 ### Standard Library
 
 The type `std.Thread.Pool` from the _stdlib_ maintains a pool of threads. But instead of
-putting integer to a queue, we spawn tasks (calls to a function) queued in a `RunQueue`.
+putting integer to a queue, we spawn tasks (calls to functions) queued in a `RunQueue`.
 
 ```zig
 const Pool = std.Thread.Pool;
@@ -205,14 +211,12 @@ defer thread_pool.deinit();
 ```
 
 {{<hint>}}
-Do not forget that the `try` in front of `thread_pool.init()` catches the function's error.
-Whenever a function returns an error, you must [catch it](https://ziglearn.org/chapter-1/#errors). Those functions
-return `!`-prefixed values.
+Do not forget the `try` in front of `thread_pool.init()`, it catches the function's returned [error](https://ziglearn.org/chapter-1/#errors).
+In Zig, the returned errors are specified by `!`-prefixed values, e.g., `pub fn foo() !int`.
 {{</hint>}}
 
-Instead of spawning a task per integer, I spawn them in batches. Testing a single integer is too small
-compared to the effort required to spawn a task. Otherwise, it would spoil more computation power into spawning a task
-than testing the integer itself.
+Instead of spawning a task per integer, I spawn a task for a batch of integer. Actually, testing one integer per task
+would require more CPU power to spawn the task itself than perform the integer test.
 
 ```zig
 const value_max: u64 = 1000000;
@@ -224,13 +228,14 @@ while (value < value_max) : (value += shard_size) {
 }
 ```
 
-Each task will verify from `[value ; value + shard_size[` all the possible prime numbers. In contrast with
-the previous example, now it requires a thread-safe allocator to create new nodes.
+So, each task checks in a range `[value ; value + shard_size[` all the prime numbers. In contrast with
+the previous example, now it requires a thread-safe allocator to create new nodes. Because we allocates the results
+nodes simultaneously in each parallel task.
 
 #### Wait Group
 
-The thread pool does not have a public `join` member but gets a `waitAndWork` instead, which requires a
-wait group (the _stdlib_ got one). It may sound odd, but mind to `reset` the wait group before using it.
+The thread pool does not have a public `join` member but gets a `waitAndWork` instead and it requires a
+wait group. It may sound odd, but mind to first `reset` the wait group before using it.
 Because it contains an `std.Thread.ResetEvent` not initialized by default.
 
 ```zig
@@ -247,6 +252,15 @@ thread_pool.waitAndWork(&wait_group);
 `prime_std.zig`: [Github](https://github.com/NoelM/zig-playground/blob/main/prime_numbers_parallel/prime_std.zig)
 
 ## Performances
+
+### Standard Library
+
+Earlier I spoke about the CPU power balance between spawing a thread and performing an operation. The first benchmark presents for 10 threads the effect
+of the shard size (or batch size) on the efficieny. On the left (shard size = 10), to many short tasks decrease the efficiency (100'000 task per thread).
+On the right (shard size = 100'000, or 1 task per thread), the efficiency decreases because of the sharding too. Actually, the first task will test 
+integers in the range of `1; 100'000`, and the last task in the range `900'001; 1'000'000`. But the bigger the integer, the more divisions are required
+to test a prime number. In consequence the run is longer because the join waits for task thread to end. Having a smaller size of shards (1'000 or 10'000)
+is more desirable because it distributes better the complexity among threads, instead of specializing one for the most complex tests (the biggest integers).
 
 ![Standard Lib Thread Pool performances for 10 threads](images/stdlib_10t_times.png)
 ![Standard Lib Thread Pool performances](images/stdlib_threads_times.png)
