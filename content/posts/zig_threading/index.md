@@ -255,14 +255,44 @@ thread_pool.waitAndWork(&wait_group);
 
 ### Standard Library
 
-Earlier I spoke about the CPU power balance between spawing a thread and performing an operation. The first benchmark presents for 10 threads the effect
-of the shard size (or batch size) on the efficieny. On the left (shard size = 10), to many short tasks decrease the efficiency (100'000 task per thread).
-On the right (shard size = 100'000, or 1 task per thread), the efficiency decreases because of the sharding too. Actually, the first task will test 
-integers in the range of `1; 100'000`, and the last task in the range `900'001; 1'000'000`. But the bigger the integer, the more divisions are required
-to test a prime number. In consequence the run is longer because the join waits for task thread to end. Having a smaller size of shards (1'000 or 10'000)
-is more desirable because it distributes better the complexity among threads, instead of specializing one for the most complex tests (the biggest integers).
+Earlier I spoke about the CPU power balance between spawing a task and running a task. This is visible on the first benchmark (figure below) where for
+a fixed number of threads (10) the size of the batch varries (from 10 to 100 000). On the left, for baches (or shard) size equal to 10, the task duration
+increases with respect to the optimum. Also, the CPU time increases because the CPU spends more time to schedule, queue, and unqueue tasks.
 
-![Standard Lib Thread Pool performances for 10 threads](images/stdlib_10t_times.png)
-![Standard Lib Thread Pool performances](images/stdlib_threads_times.png)
+The efficiency is also affected by a too large shard size, one can see it for batches of 100 000 integers. The loss of efficiency is due
+to the "specialization" of each task. At this batch size, we generate 10 tasks (it fits perfectly to the 10 threads), but their complexity
+is heterogeneous. The first task produced evaluates integer in the range `[1; 100 000]` and the last one in the range `[900 001; 1 000 000]`.
+However, for an integer _N_ the algoritms performs all the possible divisions from 2 to _N-1_, in the worst case scenario. So, the bigger 
+the integer, the more divisions to perform. Finally, only one thread deals with the most complex task, it ends later, and the `join`
+waits for it to finish its operations.
+
+In opposition to the more balanced shard size runs: 100, 1000, 10 000. They generate smallest tasks with a smoother distribution of
+complexity between tasks. Consequently, the most complex tasks are not reserved to one thread. For instance at shard size equal to 10 000,
+and in a simplified model, thread 0 and 9 would run those tasks:
+* Thread 0: `[1; 10 000]`, ..., `[900 001; 910 000]`
+* ...
+* Thread 9: `[90 001; 100 000]`, ..., `[990 001; 1 000 000]`
+
+![Shard size perfs, with 10 threads, for the shard size](images/stdlib_10t_times.png)
+
+At a fixed shard size of 10 000 integers, the variation of the number of tasks running in parallel has a huge impact (figure below). 
+The performances increases with the number of tasks in parallel (equal to the number of threads running), until they damp for about 
+8 threads. This sounds compatible with architecture of the M1 10 cores, Apple says 8 cores for "computing" and 2 for "optimization".
+However, I noticed a huge variance of the samples (visible in the error bars). For instance, à 2 tasks in parallel if often found my
+CPU load at about 300%. I cannot explain yet the reason of this high variability.
+
+![Stdlib perfs, with shard size equal to 10 000, for the number of threads](images/stdlib_threads_times.png)
+
+### Manual
+
+The benchmark of the manual implementation gives smoother results, and a beautify relation between the number of threads and the CPU load.
+When compared to the _stdlib_ implementation the results are close one to another, the program duration are within the same error
+range.
 ![Manual Thread Pool performances for 10 threads](images/manual_threads_times.png)
 ![Stdlib vs Manual](images/stdlib_vs_manual.png)
+
+## Conclusion
+
+I cannot conclude in favor of the _stdlib_ or not, and it is similar for the manual implementation. I found the _stdlib_ implementation
+easy to setup and versatile, in opposition to my custom made solution. If you need to control exactly the number of tasks running and
+the CPU load, I would recommend a manual implementation. If this is not a need the _stdlib_ thread pool is convinient.
