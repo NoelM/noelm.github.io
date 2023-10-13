@@ -28,5 +28,5 @@ Also, the booklet is fully open-sourced under the [**CC BY-SA 4.0** license](htt
 
 ## To do
 
-[x] Release of the 2023 Edition
-[ ] Preparing the first A5-printed copies
+* [x] Release of the 2023 Edition
+* [ ] Preparing the first A5-printed copies
