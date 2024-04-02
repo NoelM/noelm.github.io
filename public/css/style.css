@@ -1,9 +1,8 @@
 body {
     max-width: 800px;
-}
-
-pre {
-    background-color: #DDD;
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 1em auto;
+    padding: 0 1em;
 }
 
 h1 {
@@ -17,6 +16,119 @@ nav ul {
 
 nav ul li {
     list-style: none;
-    margin-right: 0.2em;
     display: inline;
 }
+
+nav ul li + li::before {
+    content: "|";
+    margin: 0.25em;
+}
+
+table {
+    width: 100%;
+    margin: 0.5 rem auto;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+table td {
+    padding: 0.2rem;
+    border: 1px solid #DDD;
+}
+
+table th {
+    padding: 0.2rem;
+    background-color: #DDD;
+    border: 1px solid #DDD;
+}
+
+code {
+    background-color: #00000015;
+    padding: 1px 5px;
+    border-radius: 5px;
+}
+
+pre {
+    background-color: #DDD;
+    padding: 7px;
+    border-radius: 7px;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+}
+
+pre code {
+    padding: 0;
+    border-radius: 0;
+    background-color: transparent;
+}
+
+blockquote {
+    font-style: italic;
+    margin: 0px;
+    padding: 0px 40px;
+    border-left: solid #272822;
+}
+
+blockquote.hint {
+    margin: 0;
+    padding: 1em;
+    border: 1px;
+    border-radius: 7px;
+    font-style: normal;
+    color: #004085;
+    border-color: #b8daff;
+    background-color: #cce5ff;
+}
+
+img {
+    width: 100%;
+    max-width: 600px;
+    margin: auto;
+    display: block;
+}
+
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: #1e1e1e;
+        color: #ffffff;
+    }
+
+    a {
+        color: #6f95fc;
+    }
+
+    a:visited {
+        color: #cc99ff;
+    }
+
+    code {
+        background-color: #ffffff35; 
+    }
+
+    blockquote.hint {
+        margin: 0;
+        padding: 1em;
+        border: 1px;
+        border-radius: 7px;
+        font-style: normal;
+        color: #b0d0ff;
+        border-color: #b0d0ff;
+        background-color: #000050;
+    }
+
+    pre {
+        background-color: #272822;
+    }
+
+    table td {
+        padding: 0.2rem;
+        border: 1px solid #333;
+    }
+    
+    table th {
+        padding: 0.2rem;
+        background-color: #333;
+        border: 1px solid #333;
+    }
+}
+
