@@ -48,7 +48,7 @@ $$
 
 Ainsi, en substituant \(U\) la définition d'un transformateur s'écrit :
 $$
-\sqrt{\frac{P_E \cdot Z_E}}{P_S \cdot Z_S}} = \frac{N_E}{N_S}
+\sqrt{\frac{P_E \cdot Z_E}{P_S \cdot Z_S}} = \frac{N_E}{N_S}
 $$
 
 On suppose notre transformateur parfait, dans ces conditions les puissances d'entrée et de sorties
