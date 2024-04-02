@@ -37,24 +37,22 @@ $$
 
 Pour arriver à cela, on part de la définition d'un transformateur entre une tension \(U_E\) d'entrée et \(U_S\) de sortie :
 $$
-\frac{U_E}{N_E} = \frac{U_S}{N_S} \,.
+\frac{U_E}{N_E} = \frac{U_S}{N_S} \Leftrightarrow \frac{U_E}{U_S} = \frac{N_E}{N_S} \,.
 $$
 
-Si on l'exprime sous forme de puissance \(P\), la tension s'écrit
+Exprimons la tension en fonction de la puissance \(P\) en suivant la loi d'Ohm :
 
 $$
-U = \sqrt{ \frac{P}{Z} } \,,
+U = \sqrt{P \cdot Z} \,.
 $$
 
-sachant la loi d'Ohm \(U = Z \cdot I\).
-
-Ainsi on peut exprimer le rapport des tensions comme :
+Ainsi, en substituant \(U\) la définition d'un transformateur s'écrit :
 $$
-\frac{1}{N_E} \sqrt{\frac{P_E}{Z_E}} = \frac{1}{N_S} \sqrt{\frac{P_S}{Z_S}}
+\sqrt{\frac{P_E \cdot Z_E}}{P_S \cdot Z_S}} = \frac{N_E}{N_S}
 $$
 
-Si notre transformateur est parfait, les puissances d'entrée et de sorties sont égales \(P_E = P_S\) et l'on retrouve
-le rapport des impédances ci-dessus. CQFD !
+On suppose notre transformateur parfait, dans ces conditions les puissances d'entrée et de sorties
+sont égales \(P_E = P_S\) et l'on retrouve le rapport des impédances ci-dessus. CQFD !
 
 En conclusion pour des rapports d'impédances entre 100:1 et 50:1, il nous faudra des transformateurs entre 10:1 et 7:1
 (les racines carrées des rapports d'impédances).
