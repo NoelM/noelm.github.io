@@ -126,14 +126,26 @@ pour les imprimer en 3D. Ne me demandez pas comment et avec quelle matière ils 
 un ami qui l'a fait pour moi.
 
 ![Isolateurs modèles 3D](images/insulators.png)
+{{<center>}}Vue des isolateurs sur OpenSCAD, 5 éléments de 40 mm de large{{</center>}}
+
 ![Isolateurs imprimés](images/IMG_1230.jpg)
+{{<center>}}
+Isolateurs imprimés, avec les éléments de fixations du mat (haubanage et support d'antenne)
+{{</center>}}
 
 
 ### Liste
 
-* Isolateurs, source [OpenSCAD](elements/isolators.scad) et [STL](elements/isolators.stl)
+Les nécessaires :
+* Isolateurs, source [`.scad`](elements/isolators.scad) et [`.stl`](elements/isolators.stl)
 * Fil multibrin, 0.5 mm², usage en QRP dans mon cas 5W (Yaesu FT-817)
-* Cosses à sertir, [exemple](https://www.amazon.fr/dp/B0CFQPBJT8?psc=1&ref=ppx_yo2ov_dt_b_product_details)
+* Cosses à sertir, [exemple](https://www.amazon.fr/dp/B0CFQPBJT8)
+
+Les plus :
+* Fixation pour mat [Carbon 6](https://www.sotabeams.co.uk/carbon-6-ultra-light-6-m-19-6-ft-mast/)
+    * Anneau d'haubanage, [`.scad`](elements/guying.scad) et [`.stl`](elements/guying.stl)
+    * Accroche au mat, [`.scad`](elements/top.scad) et [`.stl`](elements/top.stl)
+* [Mousquettons légers](https://www.amazon.fr/dp/B07NMDS5L9)
 
 ## Tests
 
