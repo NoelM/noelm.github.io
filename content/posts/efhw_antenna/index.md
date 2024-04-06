@@ -51,7 +51,7 @@ $$
 \sqrt{\frac{P_E \cdot Z_E}{P_S \cdot Z_S}} = \frac{N_E}{N_S}
 $$
 
-On suppose notre transformateur parfait, dans ces conditions les puissances d'entrée et de sorties
+On suppose notre transformateur parfait, dans ces conditions les puissances d'entrée et de sortie
 sont égales \(P_E = P_S\) et l'on retrouve le rapport des impédances ci-dessus. CQFD !
 
 En conclusion pour des rapports d'impédances entre 100:1 et 50:1, il nous faudra des transformateurs entre 10:1 et 7:1
@@ -69,12 +69,12 @@ $$
 comme exprimé par Steve Steams, K6OIK.
 
 Dans mon cas, pour une section 0.5 mm² le facteur se situe entre 0.97 et 0.98. La longueur des brins s'exprime de la manière
-suivante :
+suivante ([feuille de calcul ODS](elements/lengths.ods)) :
 $$
 l (m) = K \frac{150}{f (MHz)} \,.
 $$
 
-| Band | Center (MHz) | λ/2 (m) | K λ/2 (m) | Sections (m)
+| Bande | Centre (MHz) | λ/2 (m) | l (m) | Sections (m)
 | -----|--------------|---------|-----------|--------------
 | 15m  | 21.2         |7.08     | 6.86      | 6.86
 | 17m  | 18.118       |8.28     | 8.03      | 1.17
@@ -82,6 +82,62 @@ $$
 | 30m  | 10.125       |14.81    | 14.37     | 4.09
 | 40m  | 7.1          |21.13    | 20.49     | 6.12
 
+
+### Contrepoids
+
+Pour la longueur du contrepoids, le plus simple a été de suivre l'étude détaillée de Steves Yates, AA5TB[^1].
+Il montre qu'un contrepoids de 0.05λ est purement resistif, pas de composante complexe, c'est à dire réactive.
+Je vais donc partir sur ces dimenssions :
+
+| Bande | Centre (MHz) | 0.05λ (m) | Sections (m)
+| -----|----------|---------|--------------
+| 15m  | 21.2   | 0.71 | 0.71
+| 17m  | 18.118 | 0.83 | 0.12
+| 20m  | 14.15  | 1.06 | 0.23
+| 30m  | 10.125 | 1.48 | 0.42
+| 40m  | 7.1    | 2.11 | 0.63
+
+
+ ### Design simplifié
+
+{{<hint>}}
+Pour l'instant, nous nous concentrerons que sur l'antenne au design complet. Celle ci sera pour une prochaine fois !
+{{</hint>}}
+
+Selon plusieurs posts à droite à gauche et même certaines antennes comme celle de [DL2MAN](https://dl2man.de/portable-efhw-for-40-20-15-10m/)
+un simple brin rayonnant de 20.5 mètres ferait l'affaire pour 4 bandes.
+
+J'imagine pour cela dun design simplifié basé sur deux sections :
+* l'une résonnant à 40 mètres, et théoriquement 20
+* l''autre résonnant à 30 mètres, et théoriquement à 15 et 17
+
+Ce qui nous donnerait les dimenssions suivantes :
+
+| Bande     | l (m)     | Sections (m)
+| ----------|-----------|---------
+| 30-17-15m | 14.37     | 14.37
+| 40-20m    | 20.49     | 6.12
+
+## Matériel
+
+Entre chacune des sections de l'antenne il me faut de petits isolateurs qui permettent d'isoler
+ou non les brins entre eux. Pour ce faire, j'ai créé ces éléments avec [OpenSCAD](https://openscad.org/)
+pour les imprimer en 3D. Ne me demandez pas comment et avec quelle matière ils ont été imprimés, c'est
+un ami qui l'a fait pour moi.
+
+![Isolateurs modèles 3D](images/insulators.png)
+![Isolateurs imprimés](images/IMG_1230.jpg)
+
+
+### Liste
+
+* Isolateurs, source [OpenSCAD](elements/isolators.scad) et [STL](elements/isolators.stl)
+* Fil multibrin, 0.5 mm², usage en QRP dans mon cas 5W (Yaesu FT-817)
+* Cosses à sertir, [exemple](https://www.amazon.fr/dp/B0CFQPBJT8?psc=1&ref=ppx_yo2ov_dt_b_product_details)
+
+## Tests
+
+À venir !
 
 [^1]: [The End Fed Half Wave Antenna, _Steve Yates AA5TB_](https://www.aa5tb.com/efha.html)
 [^2]: Amateur Radio Handbook, ARRL, Edition 100, Sec. 21.1.7
