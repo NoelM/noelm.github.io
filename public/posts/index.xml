@@ -4,37 +4,44 @@
     <title>Posts on noelmrtn</title>
     <link>https://noelmrtn.fr/posts/</link>
     <description>Recent content in Posts on noelmrtn</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <generator>Hugo</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 02 Apr 2024 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 04 Nov 2024 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://noelmrtn.fr/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Connect a Minitel with a V.23 Modem</title>
+      <link>https://noelmrtn.fr/posts/v23_server/</link>
+      <pubDate>Mon, 04 Nov 2024 00:00:00 +0000</pubDate>
+      <guid>https://noelmrtn.fr/posts/v23_server/</guid>
+      <description>&lt;p&gt;The &lt;a href=&#34;https://en.wikipedia.org/wiki/Minitel&#34;&gt;Minitel&lt;/a&gt; was a digital terminal developed by the French national operator France Télécom, offered free of charge to any landline subscriber from the 1980s to the early 2010s. Although immensely popular in France, the service was officially discontinued in 2012 by France Télécom, now known as Orange.&lt;/p&gt;&#xA;&lt;p&gt;Interestingly, the Minitel used a V.23 modem (1200/75 baud) and can still connect to amateur servers using the same standard! As of 2024, there are still &lt;a href=&#34;https://fr.wikipedia.org/wiki/Micro-serveur_Minitel&#34;&gt;a handful of servers&lt;/a&gt; that remain active and accessible to Minitel enthusiasts.&lt;/p&gt;</description>
+    </item>
     <item>
       <title>Construction d&#39;une antenne long-fil EFHW multibande</title>
       <link>https://noelmrtn.fr/posts/efhw_antenna/</link>
       <pubDate>Tue, 02 Apr 2024 00:00:00 +0000</pubDate>
       <guid>https://noelmrtn.fr/posts/efhw_antenna/</guid>
-      <description>Habitant en ville, il n&amp;rsquo;est pas simple de faire de la HF. Alors la majeure partie du temps j&amp;rsquo;opère en HF en portable avec mon Yaesu FT-817 et un mat SOTA beams de 7m. Quant à l&amp;rsquo;antenne, j&amp;rsquo;utilise une long fil de 10 mètres accordée sur la bande des 20 mètres. Plus précisément, c&amp;rsquo;est une antenne End-Fed Half-Wave (EFHW), que l&amp;rsquo;on traduirait probablement comme : antenne demie-onde alimentée par terminaison.</description>
+      <description>&lt;p&gt;Habitant en ville, il n&amp;rsquo;est pas simple de faire de la HF. Alors la majeure partie du temps&#xA;j&amp;rsquo;opère en HF en portable avec mon Yaesu FT-817 et un mat SOTA beams de 7m. Quant à l&amp;rsquo;antenne,&#xA;j&amp;rsquo;utilise une long fil de 10 mètres accordée sur la bande des 20 mètres. Plus précisément, c&amp;rsquo;est&#xA;une antenne &lt;em&gt;End-Fed Half-Wave (EFHW)&lt;/em&gt;, que l&amp;rsquo;on traduirait probablement comme :&#xA;&lt;em&gt;antenne demie-onde alimentée par terminaison&lt;/em&gt;.&lt;/p&gt;</description>
     </item>
     <item>
       <title>Zig Threading Tutorial</title>
       <link>https://noelmrtn.fr/posts/zig_threading/</link>
       <pubDate>Wed, 16 Aug 2023 00:00:00 +0000</pubDate>
       <guid>https://noelmrtn.fr/posts/zig_threading/</guid>
-      <description>Prequel With the release of Zig 0.11.0, the language introduced channels like in Go. However, in the same release, they announced that the support of async functions is postponed (related Github issue); they expect their support for the release 0.13.0.&#xA;Initially, I wanted to test channels, but:&#xA;0.11.0 gets Channel, but unusable because it requires await functions 0.10.0 gets async/await support with the option -fstage1, but the Channel is not part of the language Finally, I switched to the solution of thread pools.</description>
+      <description>&lt;h2 id=&#34;prequel&#34;&gt;Prequel&lt;/h2&gt;&#xA;&lt;p&gt;With the release of Zig &lt;code&gt;0.11.0&lt;/code&gt;, the language introduced &lt;a href=&#34;https://ziglang.org/documentation/0.11.0/std/#A;std:event.Channel&#34;&gt;channels&lt;/a&gt;&#xA;like in Go. However, in the same release, they announced that the support of&#xA;&lt;a href=&#34;https://ziglang.org/documentation/0.11.0/#Async-Functions&#34;&gt;async functions is postponed&lt;/a&gt; (related&#xA;&lt;a href=&#34;https://github.com/ziglang/zig/issues/6025&#34;&gt;Github issue&lt;/a&gt;); they expect their support for the release &lt;code&gt;0.13.0&lt;/code&gt;.&lt;/p&gt;&#xA;&lt;p&gt;Initially, I wanted to test channels, but:&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;code&gt;0.11.0&lt;/code&gt; gets &lt;code&gt;Channel&lt;/code&gt;, but unusable because it requires &lt;a href=&#34;https://ziglang.org/documentation/0.11.0/std/#A;std:event.Channel.get&#34;&gt;await&lt;/a&gt; functions&lt;/li&gt;&#xA;&lt;li&gt;&lt;code&gt;0.10.0&lt;/code&gt; gets &lt;code&gt;async/await&lt;/code&gt; support with the option &lt;code&gt;-fstage1&lt;/code&gt;, but the &lt;code&gt;Channel&lt;/code&gt; is not part of the language&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;Finally, I switched to the solution of &lt;em&gt;thread pools&lt;/em&gt;.&lt;/p&gt;</description>
     </item>
     <item>
       <title>Prime Numbers Algorithm, in Zig and C</title>
       <link>https://noelmrtn.fr/posts/zig_and_c/</link>
       <pubDate>Sat, 22 Jul 2023 00:00:00 +0000</pubDate>
       <guid>https://noelmrtn.fr/posts/zig_and_c/</guid>
-      <description>A colleague of mine told me to try a new programming language named Zig. It is designed closely to C/C++ and is also inspired by Rust. I tried to learn Rust those last years as a replacement for C++. However, the syntax is too complex for me, and I&amp;rsquo;ve struggled too much with the compiler&amp;hellip;&#xA;I tried Zig a few days ago with Zig Learn, which is a detailed tutorial to understand the basics.</description>
+      <description>&lt;p&gt;A colleague of mine told me to try a new programming language named &lt;a href=&#34;https://ziglang.org/&#34;&gt;Zig&lt;/a&gt;. It is designed&#xA;closely to C/C++ and is also inspired by Rust. I tried to learn Rust those last years as a replacement for C++.&#xA;However, the syntax is too complex for me, and I&amp;rsquo;ve struggled too much with the compiler&amp;hellip;&lt;/p&gt;&#xA;&lt;p&gt;I tried Zig a few days ago with &lt;a href=&#34;https://ziglearn.org/&#34;&gt;Zig Learn&lt;/a&gt;, which is a detailed tutorial to understand the basics.&#xA;I found the syntax straightforward and easy to read, but the most important for me was easy to play with; in less than a couple of hours, I found&#xA;myself comfortable with the language! Actually, this is one of the objectives of Zig&amp;rsquo;s philosophy. You can access it by typing&#xA;&lt;code&gt;zig zen&lt;/code&gt; in your terminal:&lt;/p&gt;</description>
     </item>
     <item>
       <title>My Journey Building a Magnetic Loop Antenna</title>
       <link>https://noelmrtn.fr/posts/loop_antenna/</link>
       <pubDate>Sun, 18 Dec 2022 00:00:00 +0000</pubDate>
       <guid>https://noelmrtn.fr/posts/loop_antenna/</guid>
-      <description>Currently, I am living in a Parisian flat, and I love doing HF. But you probably know that the antenna length is proportional to wavelength, and dozens of meters cannot be found in a Parisian flat, believe me. So, I found mag-loop antennas a good compromise to operate from the inside of my flat. I&amp;rsquo;ve looked for numerous antenna models, but for all of them, the price is always high, at least 300€.</description>
+      <description>&lt;p&gt;Currently, I am living in a Parisian flat, and I love doing HF. But you probably know that the antenna length is proportional to wavelength, and dozens of meters cannot be found in a Parisian flat, believe me. So, I found mag-loop antennas a good compromise to operate from the inside of my flat. I&amp;rsquo;ve looked for numerous antenna models, but for all of them, the price is always high, at least 300€.&lt;/p&gt;</description>
     </item>
   </channel>
 </rss>
