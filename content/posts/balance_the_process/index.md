@@ -33,7 +33,7 @@ Thus, I postulate that introducing a process adds a new constraint to the system
 
 ## Finding the Equilibrium
 
-Let me introduce a process: the plane-takeoff checklist (I like planes and I used to pilot, that's why I chose this example). It intends to improve the safety of the flight at a critical moment. When the plane is close to the ground, close to potential obstacles and, at a low speed.
+Let me introduce a process: the plane-takeoff checklist[^1]. It intends to improve the safety of the flight at a critical moment. When the plane is close to the ground, close to potential obstacles and, at a low speed.
 
 I represented on the graph below the safety added by the takeoff checklist with respect to its length, e.i., the number of items to verify.
 
@@ -68,13 +68,15 @@ We propose mapping each task to a single post-it. The content on the post-it can
 * Estimate
 * …and any other Jira field!
 
-The level of detail required on post-its depends on team size. For a solo worker or a binome, minimal details like a title and brief description are sufficient, as the task creator and executor are the same. However, in larger teams, tasks often involve multiple stakeholders, such as managers, developers, and reviewers, making them interdependent. This significantly increases the number of interactions, which grows quadratically with team size (e.g., 4 people \= 12 potential interactions per task).
+We could require every task to have all fields filled out, but this approach would be counterproductive. The level of detail needed on post-its depends heavily on the size of the team and its context. For solo workers or small pairs, minimal details, such as a title and brief description, are enough. Because the task creator and executor are usually the same person.
 
-With numerous stakeholders, it can easily end up with overwhelming communication challenges, like _infinite_ Slack conversations and threads. To mitigate this, filling the post-it fields will save time. It streamlines communication, reduces unnecessary back-and-forth, and ensures all stakeholders are aligned.
+However, in larger teams, tasks often involve multiple stakeholders, including managers, developers, and reviewers, which creates dependencies. As team size `N` grows, the number of interactions increases quadratically (`N(N-1)`, e.g., 4 people = 12 potential interactions per task).
+
+With many stakeholders, communication can quickly become overwhelming, resulting in endless Slack threads and back-and-forth conversations. To address this, filling post-it fields saves time by streamlining communication.
 
 ![](images/image2.png)
 
-So, we need to balance the level of details on each post-it according to the team size and its autonomy. As illustrated in the graph, the optimal amount of detail increases with the team size. On the other hand, if there are too may mandatory fields—similar to the takeoff checklist example—we will waste more time executing the process than completing the task itself.
+Therefore, we need to balance the level of detail required based on team size and autonomy. As shown in the graph, the optimal amount of detail increases with team size. However, if too many fields are made mandatory, similar to the takeoff checklist example, we risk wasting more time executing the process than actually completing the tasks.
 
 In a nutshell, don’t get stuck on Agile, Scrum, or other dogmas. Take the best elements from each, adapt them, and create an optimal process tailored to your needs.
 
@@ -101,3 +103,5 @@ A process is a tool designed to support you, your team, and your company by maki
 ---
 
 _Thank you [ewjoachim](https://github.com/ewjoachim) for the review and the recommendations._
+
+[^1]: Yes, I do love planes, and I used to pilot DR400, this is why I've chosen this example.

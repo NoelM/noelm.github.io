@@ -2,36 +2,36 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://noelmrtn.fr/posts/balance_the_process/</loc>
+    <loc>http://localhost:35011/posts/balance_the_process/</loc>
     <lastmod>2024-12-05T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://noelmrtn.fr/</loc>
+    <loc>http://localhost:35011/</loc>
     <lastmod>2024-12-05T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://noelmrtn.fr/posts/</loc>
+    <loc>http://localhost:35011/posts/</loc>
     <lastmod>2024-12-05T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://noelmrtn.fr/posts/v23_server/</loc>
+    <loc>http://localhost:35011/posts/v23_server/</loc>
     <lastmod>2024-11-04T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://noelmrtn.fr/posts/efhw_antenna/</loc>
+    <loc>http://localhost:35011/posts/efhw_antenna/</loc>
     <lastmod>2024-04-02T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://noelmrtn.fr/posts/zig_threading/</loc>
+    <loc>http://localhost:35011/posts/zig_threading/</loc>
     <lastmod>2023-08-16T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://noelmrtn.fr/posts/zig_and_c/</loc>
+    <loc>http://localhost:35011/posts/zig_and_c/</loc>
     <lastmod>2023-07-22T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://noelmrtn.fr/posts/loop_antenna/</loc>
+    <loc>http://localhost:35011/posts/loop_antenna/</loc>
     <lastmod>2022-12-18T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://noelmrtn.fr/about/</loc>
+    <loc>http://localhost:35011/about/</loc>
   </url><url>
-    <loc>https://noelmrtn.fr/hambooklet/</loc>
+    <loc>http://localhost:35011/hambooklet/</loc>
   </url><url>
-    <loc>https://noelmrtn.fr/categories/</loc>
+    <loc>http://localhost:35011/categories/</loc>
   </url><url>
-    <loc>https://noelmrtn.fr/tags/</loc>
+    <loc>http://localhost:35011/tags/</loc>
   </url>
 </urlset>
